@@ -123,34 +123,38 @@ class Ev3rstorm(EV3Brick, IRBeaconDriverMixin):
         self.color_sensor = ColorSensor(color_sensor_port)
 
 
-    def shoot_if_touched(self):
-        N_ROTATIONS_PER_SHOT = 3
-        ROTATIONAL_DEGREES_PER_SHOT = N_ROTATIONS_PER_SHOT * 360
+    def shoot_bazooka_if_touched(self):
+        MEDIUM_MOTOR_N_ROTATIONS_PER_SHOT = 3
+        MEDIUM_MOTOR_ROTATIONAL_DEGREES_PER_SHOT = MEDIUM_MOTOR_N_ROTATIONS_PER_SHOT * 360
 
         if self.touch_sensor.pressed():
             if self.color_sensor.ambient() < 15:
-                self.speaker.play_file(file='sounds/Up.wav')
+                self.speaker.play_file(file=SoundFile.UP)
 
                 self.shooting_motor.run_angle(
-                    speed=2 * ROTATIONAL_DEGREES_PER_SHOT,   # shoot quickly in half a second
-                    rotation_angle=ROTATIONAL_DEGREES_PER_SHOT,
+                    speed=2 * MEDIUM_MOTOR_ROTATIONAL_DEGREES_PER_SHOT,   # shoot quickly in half a second
+                    rotation_angle=MEDIUM_MOTOR_ROTATIONAL_DEGREES_PER_SHOT,
                     then=Stop.HOLD,
                     wait=True)
 
             else:
-                self.speaker.play_file(file='sounds/Down.wav')
+                self.speaker.play_file(file=SoundFile.DOWN)
 
                 self.shooting_motor.run_angle(
-                    speed=2 * ROTATIONAL_DEGREES_PER_SHOT,   # shoot quickly in half a second
-                    rotation_angle=-ROTATIONAL_DEGREES_PER_SHOT,
+                    speed=2 * MEDIUM_MOTOR_ROTATIONAL_DEGREES_PER_SHOT,   # shoot quickly in half a second
+                    rotation_angle=-MEDIUM_MOTOR_ROTATIONAL_DEGREES_PER_SHOT,
                     then=Stop.HOLD,
                     wait=True)
 
 
     def main(self):
+        self.screen.draw_image(
+            x=0, y=0,
+            source=ImageFile.TARGET)
+
         while True:
             self.drive_by_ir_beacon()
-            self.shoot_if_touched()
+            self.shoot_bazooka_if_touched()
 
 
 if __name__ == '__main__':
