@@ -15,7 +15,7 @@ from pybricks.hubs import EV3Brick
 from pybricks.ev3devices import Motor, TouchSensor, ColorSensor, InfraredSensor
 from pybricks.media.ev3dev import ImageFile, SoundFile
 from pybricks.robotics import DriveBase
-from pybricks.parameters import Button, Direction, Port, Stop
+from pybricks.parameters import Button, Color, Direction, Port, Stop
 
 
 class IRBeaconDriverMixin:
@@ -122,6 +122,20 @@ class Ev3rstorm(EV3Brick, IRBeaconDriverMixin):
         self.color_sensor = ColorSensor(port=color_sensor_port)
 
     
+    def detect_object_by_ir_sensor(self):
+        """
+        Ev3rstorm reacts by turning his LEDs red and speaking when his IR Sensor detects an object in front
+        (inspiration from LEGO Mindstorms EV3 Home Edition: Ev3rstorm: Tutorial #4)
+        """
+        if self.ir_sensor.distance() < 25:
+            self.light.on(color=Color.RED)
+            self.speaker.play_file(file=SoundFile.OBJECT)
+            self.speaker.play_file(file=SoundFile.DETECTED)
+            self.speaker.play_file(file=SoundFile.ERROR_ALARM)
+            
+        else:
+            self.light.off()
+
 
     def blast_bazooka_if_touched(self):
         """
@@ -165,6 +179,7 @@ class Ev3rstorm(EV3Brick, IRBeaconDriverMixin):
 
         while True:
             self.drive_by_ir_beacon()
+            self.detect_object_by_ir_sensor()
             self.blast_bazooka_if_touched()
 
 
