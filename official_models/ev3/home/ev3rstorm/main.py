@@ -24,6 +24,7 @@ class Ev3rstorm(EV3Brick, IRBeaconDriverMixin):
     WHEEL_DIAMETER = 26   # milimeters
     AXLE_TRACK = 102      # milimeters
 
+
     def __init__(
             self,
             left_motor_port: Port = Port.B,
@@ -49,6 +50,7 @@ class Ev3rstorm(EV3Brick, IRBeaconDriverMixin):
 
         self.touch_sensor = TouchSensor(touch_sensor_port)
         self.color_sensor = ColorSensor(color_sensor_port)
+
 
     def shoot_if_touched(self):
         N_ROTATIONS_PER_SHOT = 3
