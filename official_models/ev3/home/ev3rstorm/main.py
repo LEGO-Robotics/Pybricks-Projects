@@ -21,8 +21,8 @@ from drive_util import IRBeaconDriverMixin
 
 
 class Ev3rstorm(EV3Brick, IRBeaconDriverMixin):
-    WHEEL_DIAMETER = 26
-    AXLE_TRACK = 102
+    WHEEL_DIAMETER = 26   # milimeters
+    AXLE_TRACK = 102      # milimeters
 
     def __init__(
             self,
@@ -40,7 +40,9 @@ class Ev3rstorm(EV3Brick, IRBeaconDriverMixin):
             left_motor_port=left_motor_port,
             right_motor_port=right_motor_port,
             ir_sensor_port=ir_sensor_port,
-            ir_beacon_channel=ir_beacon_channel)
+            ir_beacon_channel=ir_beacon_channel,
+            wheel_diameter=self.WHEEL_DIAMETER,
+            axle_track=self.AXLE_TRACK)
         
         self.shooting_motor = Motor(port=shooting_motor_port,
                                     positive_direction=Direction.CLOCKWISE)

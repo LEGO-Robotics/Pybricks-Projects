@@ -9,13 +9,15 @@ class IRBeaconDriverMixin:
             left_motor_port: Port = Port.B,
             right_motor_port: Port = Port.C,
             ir_sensor_port: Port = Port.S4,
-            ir_beacon_channel: int = 1):
+            ir_beacon_channel: int = 1,
+            wheel_diameter: float = 50,
+            axle_track: float = 100):
         self.driver = DriveBase(left_motor=Motor(port=left_motor_port,
                                                  positive_direction=Direction.CLOCKWISE),
                                 right_motor=Motor(port=right_motor_port,
                                                   positive_direction=Direction.CLOCKWISE),
-                                wheel_diameter=self.WHEEL_DIAMETER,
-                                axle_track=self.AXLE_TRACK)
+                                wheel_diameter=wheel_diameter,
+                                axle_track=axle_track)
 
         self.ir_sensor = InfraredSensor(ir_sensor_port)
         self.ir_beacon_channel = ir_beacon_channel
