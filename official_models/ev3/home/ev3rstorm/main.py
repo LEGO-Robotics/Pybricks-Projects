@@ -18,8 +18,10 @@ from pybricks.robotics import DriveBase
 from pybricks.parameters import Button, Direction, Port, Stop
 
 
-# this reusable mixin provides the capability of driving a robot with a Driving Base by the IR beacon
 class IRBeaconDriverMixin:
+    """
+    This reusable mixin provides the capability of driving a robot with a Driving Base by the IR beacon
+    """
     def __init__(
             self,
             wheel_diameter: float, axle_track: float,   # both in milimeters
@@ -91,7 +93,7 @@ class IRBeaconDriverMixin:
                 speed=-speed,
                 turn_rate=-turn_rate)
 
-        # stop
+        # otherwise stop
         else:
             self.driver.stop()
 
@@ -116,11 +118,16 @@ class Ev3rstorm(EV3Brick, IRBeaconDriverMixin):
         self.bazooka_blast_motor = Motor(port=bazooka_blast_motor_port,
                                          positive_direction=Direction.CLOCKWISE)
 
-        self.touch_sensor = TouchSensor(touch_sensor_port)
-        self.color_sensor = ColorSensor(color_sensor_port)
+        self.touch_sensor = TouchSensor(port=touch_sensor_port)
+        self.color_sensor = ColorSensor(port=color_sensor_port)
 
+    
 
     def blast_bazooka_if_touched(self):
+        """
+        Ev3rstorm blasts his bazooka when his Touch Sensor is pressed
+        (inspiration from LEGO Mindstorms EV3 Home Edition: Ev3rstorm: Tutorial #5)
+        """
         MEDIUM_MOTOR_N_ROTATIONS_PER_BLAST = 3
         MEDIUM_MOTOR_ROTATIONAL_DEGREES_PER_BLAST = MEDIUM_MOTOR_N_ROTATIONS_PER_BLAST * 360
 
@@ -134,6 +141,8 @@ class Ev3rstorm(EV3Brick, IRBeaconDriverMixin):
                     then=Stop.HOLD,
                     wait=True)
 
+                self.speaker.play_file(file=SoundFile.LAUGHING_1)
+
             else:
                 self.speaker.play_file(file=SoundFile.DOWN)
 
@@ -143,8 +152,13 @@ class Ev3rstorm(EV3Brick, IRBeaconDriverMixin):
                     then=Stop.HOLD,
                     wait=True)
 
+                self.speaker.play_file(file=SoundFile.LAUGHING_2)
+
 
     def main(self):
+        """
+        Ev3rstorm's main program performing various capabilities
+        """
         self.screen.draw_image(
             x=0, y=0,
             source=ImageFile.TARGET)
