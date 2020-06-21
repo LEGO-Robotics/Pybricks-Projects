@@ -194,9 +194,7 @@ class Ev3rstorm(EV3Brick, IRBeaconDriverMixin):
         """
         Ev3rstorm's main program performing various capabilities
         """
-        self.screen.draw_image(
-            x=0, y=0,
-            source=ImageFile.TARGET)
+        self.screen.load_image(ImageFile.TARGET)
 
         while True:
             self.drive_by_ir_beacon()
