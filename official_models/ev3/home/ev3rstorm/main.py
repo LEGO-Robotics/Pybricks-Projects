@@ -122,7 +122,6 @@ class Ev3rstorm(EV3Brick, IRBeaconDriverMixin):
         self.color_sensor = ColorSensor(port=color_sensor_port)
 
     
-
     def blast_bazooka_if_touched(self):
         """
         Ev3rstorm blasts his bazooka when his Touch Sensor is pressed
