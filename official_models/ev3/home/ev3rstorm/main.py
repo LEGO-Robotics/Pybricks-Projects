@@ -27,14 +27,14 @@ class IRBeaconDriverMixin:
             wheel_diameter: float, axle_track: float,   # both in milimeters
             left_motor_port: Port = Port.B, right_motor_port: Port = Port.C,
             ir_sensor_port: Port = Port.S4, ir_beacon_channel: int = 1):
-        self.driver = DriveBase(left_motor=Motor(port=left_motor_port,
-                                                 positive_direction=Direction.CLOCKWISE),
-                                right_motor=Motor(port=right_motor_port,
-                                                  positive_direction=Direction.CLOCKWISE),
-                                wheel_diameter=wheel_diameter,
-                                axle_track=axle_track)
+        self.drive_base = DriveBase(left_motor=Motor(port=left_motor_port,
+                                                     positive_direction=Direction.CLOCKWISE),
+                                    right_motor=Motor(port=right_motor_port,
+                                                      positive_direction=Direction.CLOCKWISE),
+                                    wheel_diameter=wheel_diameter,
+                                    axle_track=axle_track)
 
-        self.ir_sensor = InfraredSensor(ir_sensor_port)
+        self.ir_sensor = InfraredSensor(port=ir_sensor_port)
         self.ir_beacon_channel = ir_beacon_channel
     
     
@@ -47,55 +47,55 @@ class IRBeaconDriverMixin:
 
         # forward
         if ir_beacon_button_pressed == {Button.LEFT_UP, Button.RIGHT_UP}:
-            self.driver.drive(
+            self.drive_base.drive(
                 speed=speed,
                 turn_rate=0)
 
         # backward
         elif ir_beacon_button_pressed == {Button.LEFT_DOWN, Button.RIGHT_DOWN}:
-            self.driver.drive(
+            self.drive_base.drive(
                 speed=-speed,
                 turn_rate=0)
 
         # turn left on the spot
         elif ir_beacon_button_pressed == {Button.LEFT_UP, Button.RIGHT_DOWN}:
-            self.driver.drive(
+            self.drive_base.drive(
                 speed=0,
                 turn_rate=-turn_rate)
 
         # turn right on the spot
         elif ir_beacon_button_pressed == {Button.RIGHT_UP, Button.LEFT_DOWN}:
-            self.driver.drive(
+            self.drive_base.drive(
                 speed=0,
                 turn_rate=turn_rate)
 
         # turn left forward
         elif ir_beacon_button_pressed == {Button.LEFT_UP}:
-            self.driver.drive(
+            self.drive_base.drive(
                 speed=speed,
                 turn_rate=-turn_rate)
 
         # turn right forward
         elif ir_beacon_button_pressed == {Button.RIGHT_UP}:
-            self.driver.drive(
+            self.drive_base.drive(
                 speed=speed,
                 turn_rate=turn_rate)
 
         # turn left backward
         elif ir_beacon_button_pressed == {Button.LEFT_DOWN}:
-            self.driver.drive(
+            self.drive_base.drive(
                 speed=-speed,
                 turn_rate=turn_rate)
 
         # turn right backward
         elif ir_beacon_button_pressed == {Button.RIGHT_DOWN}:
-            self.driver.drive(
+            self.drive_base.drive(
                 speed=-speed,
                 turn_rate=-turn_rate)
 
         # otherwise stop
         else:
-            self.driver.stop()
+            self.drive_base.stop()
 
 
 class Ev3rstorm(EV3Brick, IRBeaconDriverMixin):
@@ -105,14 +105,14 @@ class Ev3rstorm(EV3Brick, IRBeaconDriverMixin):
 
     def __init__(
             self,
-            left_leg_motor_port: Port = Port.B, right_leg_motor_port: Port = Port.C,
+            left_track_motor_port: Port = Port.B, right_track_motor_port: Port = Port.C,
             bazooka_blast_motor_port: Port = Port.A,
             touch_sensor_port: Port = Port.S1, color_sensor_port: Port = Port.S3,
             ir_sensor_port: Port = Port.S4, ir_beacon_channel: int = 1):
         IRBeaconDriverMixin.__init__(
             self,
             wheel_diameter=self.WHEEL_DIAMETER, axle_track=self.AXLE_TRACK,
-            left_motor_port=left_leg_motor_port, right_motor_port=right_leg_motor_port,
+            left_motor_port=left_track_motor_port, right_motor_port=right_track_motor_port,
             ir_sensor_port=ir_sensor_port, ir_beacon_channel=ir_beacon_channel)
         
         self.bazooka_blast_motor = Motor(port=bazooka_blast_motor_port,
@@ -154,17 +154,19 @@ class Ev3rstorm(EV3Brick, IRBeaconDriverMixin):
                 self.speaker.play_file(file=SoundFile.LAUGHING_2)
 
 
-    def main(self):
+    def main(self,
+             driving_speed: float = 100   # mm/s
+            ):
         """
         Ev3rstorm's main program performing various capabilities
         """
         self.screen.load_image(ImageFile.TARGET)
 
         while True:
-            self.drive_by_ir_beacon()
+            self.drive_by_ir_beacon(speed=driving_speed)
             self.blast_bazooka_if_touched()
 
 
 if __name__ == '__main__':
     EV3RSTORM = Ev3rstorm()
-    EV3RSTORM.main()
+    EV3RSTORM.main(driving_speed=300)
