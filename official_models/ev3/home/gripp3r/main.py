@@ -17,7 +17,7 @@ from pybricks.robotics import DriveBase
 from pybricks.parameters import Button, Direction, Port
 
 
-class IRBeaconDriverMixin:
+class RemoteControlledTank:
     """
     This reusable mixin provides the capability of driving a robot with a Driving Base by the IR beacon
     """
@@ -97,7 +97,7 @@ class IRBeaconDriverMixin:
             self.driver.stop()
 
 
-class Gripp3r(EV3Brick, IRBeaconDriverMixin):
+class Gripp3r(RemoteControlledTank, EV3Brick):
     WHEEL_DIAMETER = 26   # milimeters
     AXLE_TRACK = 102      # milimeters
 
@@ -106,7 +106,7 @@ class Gripp3r(EV3Brick, IRBeaconDriverMixin):
             self,
             left_track_motor_port: Port = Port.B, right_track_motor_port: Port = Port.C,
             ir_sensor_port: Port = Port.S4, ir_beacon_channel: int = 1):
-        IRBeaconDriverMixin.__init__(
+        super().__init__(
             self,
             wheel_diameter=self.WHEEL_DIAMETER, axle_track=self.AXLE_TRACK,
             left_motor_port=left_track_motor_port, right_motor_port=right_track_motor_port,
