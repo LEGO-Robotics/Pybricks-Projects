@@ -17,6 +17,8 @@ from pybricks.media.ev3dev import ImageFile, SoundFile
 from pybricks.robotics import DriveBase
 from pybricks.parameters import Button, Direction, Port, Stop
 
+from random import randint
+
 
 class RemoteControlledTank:
     """
@@ -120,6 +122,14 @@ class Ev3rstorm(RemoteControlledTank, EV3Brick):
         self.touch_sensor = TouchSensor(port=touch_sensor_port)
         self.color_sensor = ColorSensor(port=color_sensor_port)
 
+
+    def dance_randomly_if_ir_beacon_button_pressed(self):
+        """
+        Ev3rstorm dances by turning by random angles on the spot when the Beacon button is pressed
+        """
+        while Button.BEACON in self.ir_sensor.buttons(channel=self.ir_beacon_channel):
+            self.drive_base.turn(angle=randint(-360, 360))
+
     
     def blast_bazooka_if_touched(self):
         """
@@ -163,6 +173,7 @@ class Ev3rstorm(RemoteControlledTank, EV3Brick):
 
         while True:
             self.drive_by_ir_beacon(speed=driving_speed)
+            self.dance_randomly_if_ir_beacon_button_pressed()
             self.blast_bazooka_if_touched()
 
 
