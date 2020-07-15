@@ -2,7 +2,7 @@
 
 """
 Example LEGO® MINDSTORMS® EV3 Ev3rstorm Program
-----------------------------------------------
+-----------------------------------------------
 
 This program requires LEGO® EV3 MicroPython v2.0.
 Download: https://education.lego.com/en-us/support/mindstorms-ev3/python-for-ev3
