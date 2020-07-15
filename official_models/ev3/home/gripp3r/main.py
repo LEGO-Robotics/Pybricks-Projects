@@ -39,7 +39,7 @@ class RemoteControlledTank:
     
     def drive_by_ir_beacon(
             self,
-            speed: float = 100,     # mm/s
+            speed: float = 1000,     # mm/s
             turn_rate: float = 90   # rotational speed deg/s
         ):
         ir_beacon_button_pressed = set(self.ir_sensor.buttons(channel=self.ir_beacon_channel))
@@ -118,7 +118,7 @@ class Gripp3r(RemoteControlledTank, EV3Brick):
         Gripp3r's main program performing various capabilities
         """
         while True:
-            self.drive_by_ir_beacon(speed=300)
+            self.drive_by_ir_beacon(speed=1000)
 
 
 if __name__ == '__main__':
