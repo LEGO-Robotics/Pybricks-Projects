@@ -42,7 +42,7 @@ class RemoteControlledTank:
     
     def drive_by_ir_beacon(
             self,
-            speed: float = 100,     # mm/s
+            speed: float = 1000,     # mm/s
             turn_rate: float = 90   # rotational speed deg/s
         ):
         ir_beacon_button_pressed = set(self.ir_sensor.buttons(channel=self.ir_beacon_channel))
@@ -164,7 +164,7 @@ class Ev3rstorm(RemoteControlledTank, EV3Brick):
 
 
     def main(self,
-             driving_speed: float = 100   # mm/s
+             driving_speed: float = 1000   # mm/s
             ):
         """
         Ev3rstorm's main program performing various capabilities
@@ -179,4 +179,4 @@ class Ev3rstorm(RemoteControlledTank, EV3Brick):
 
 if __name__ == '__main__':
     EV3RSTORM = Ev3rstorm()
-    EV3RSTORM.main(driving_speed=300)
+    EV3RSTORM.main(driving_speed=1000)
