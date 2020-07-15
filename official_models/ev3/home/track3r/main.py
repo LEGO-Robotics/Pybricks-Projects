@@ -120,7 +120,7 @@ class Track3r(RemoteControlledTank, EV3Brick):
  
     def main(self):
         """
-        Track3r's main program performing various capabilities
+        Driving Track3r around by the IR beacon
         """
         while True:
             self.drive_by_ir_beacon(speed=1000)
