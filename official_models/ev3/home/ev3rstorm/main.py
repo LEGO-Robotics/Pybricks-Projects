@@ -16,6 +16,7 @@ from pybricks.ev3devices import Motor, TouchSensor, ColorSensor, InfraredSensor
 from pybricks.media.ev3dev import ImageFile, SoundFile
 from pybricks.robotics import DriveBase
 from pybricks.parameters import Button, Direction, Port, Stop
+from pybricks.tools import wait
 
 from random import randint
 
@@ -175,6 +176,7 @@ class Ev3rstorm(RemoteControlledTank, EV3Brick):
             self.drive_by_ir_beacon(speed=driving_speed)
             self.dance_randomly_if_ir_beacon_button_pressed()
             self.blast_bazooka_if_touched()
+            wait(1)
 
 
 if __name__ == '__main__':

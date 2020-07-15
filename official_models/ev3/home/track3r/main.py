@@ -16,6 +16,7 @@ from pybricks.ev3devices import Motor, InfraredSensor
 from pybricks.media.ev3dev import ImageFile, SoundFile
 from pybricks.robotics import DriveBase
 from pybricks.parameters import Button, Direction, Port, Stop
+from pybricks.tools import wait
 
 
 class RemoteControlledTank:
@@ -123,6 +124,7 @@ class Track3r(RemoteControlledTank, EV3Brick):
         """
         while True:
             self.drive_by_ir_beacon(speed=1000)
+            wait(1)
 
 
 class Track3rWithBlastingBazooka(Track3r):
@@ -156,6 +158,7 @@ class Track3rWithBlastingBazooka(Track3r):
         while True:
             self.drive_by_ir_beacon()
             self.blast_bazooka_by_ir_beacon()
+            wait(1)
 
 
 if __name__ == '__main__':

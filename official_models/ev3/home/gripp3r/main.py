@@ -15,6 +15,7 @@ from pybricks.hubs import EV3Brick
 from pybricks.ev3devices import Motor, InfraredSensor
 from pybricks.robotics import DriveBase
 from pybricks.parameters import Button, Direction, Port
+from pybricks.tools import wait
 
 
 class RemoteControlledTank:
@@ -107,7 +108,6 @@ class Gripp3r(RemoteControlledTank, EV3Brick):
             left_track_motor_port: Port = Port.B, right_track_motor_port: Port = Port.C,
             ir_sensor_port: Port = Port.S4, ir_beacon_channel: int = 1):
         super().__init__(
-            self,
             wheel_diameter=self.WHEEL_DIAMETER, axle_track=self.AXLE_TRACK,
             left_motor_port=left_track_motor_port, right_motor_port=right_track_motor_port,
             ir_sensor_port=ir_sensor_port, ir_beacon_channel=ir_beacon_channel)
@@ -119,6 +119,7 @@ class Gripp3r(RemoteControlledTank, EV3Brick):
         """
         while True:
             self.drive_by_ir_beacon(speed=1000)
+            wait(1)
 
 
 if __name__ == '__main__':
