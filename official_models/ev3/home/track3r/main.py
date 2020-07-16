@@ -164,22 +164,22 @@ class Track3rWithGrippingClaw(Track3r):
     (inspiration from LEGO Mindstorms EV3 Home Edition: Track3r: Tutorial #3)
     """
 
-    is_grabbing = False
+    is_gripping = False
     
     def grip_or_release_claw_by_ir_beacon(
             self,
             speed: float = 1000   # degrees per second
         ):
         if Button.BEACON in self.ir_sensor.buttons(channel=self.ir_beacon_channel):
-            if self.is_grabbing:
+            if self.is_gripping:
                 self.medium_motor.run(speed=-speed)
                 self.speaker.play_file(file=SoundFile.AIR_RELEASE)
-                self.is_grabbing = False
+                self.is_gripping = False
 
             else:
                 self.medium_motor.run(speed=speed)
                 self.speaker.play_file(file=SoundFile.AIRBRAKE)
-                self.is_grabbing = True
+                self.is_gripping = True
 
             while Button.BEACON in self.ir_sensor.buttons(channel=self.ir_beacon_channel):
                 pass
