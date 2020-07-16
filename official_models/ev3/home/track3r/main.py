@@ -148,9 +148,6 @@ class Track3rWithBlastingBazooka(Track3r):
             while Button.BEACON in self.ir_sensor.buttons(channel=self.ir_beacon_channel):
                 pass
 
-        else:
-            self.medium_motor.stop()
-
 
     def main(self):
         self.screen.load_image(ImageFile.PINCHED_MIDDLE)
@@ -158,6 +155,40 @@ class Track3rWithBlastingBazooka(Track3r):
         while True:
             self.drive_by_ir_beacon()
             self.blast_bazooka_by_ir_beacon()
+            wait(1)
+
+
+class Track3rWithGrippingClaw(Track3r):
+    """
+    Track3r grips or releases his claw when the Beacon button is pressed
+    (inspiration from LEGO Mindstorms EV3 Home Edition: Track3r: Tutorial #3)
+    """
+
+    is_grabbing = False
+    
+    def grip_or_release_claw_by_ir_beacon(
+            self,
+            speed: float = 1000   # degrees per second
+        ):
+        if Button.BEACON in self.ir_sensor.buttons(channel=self.ir_beacon_channel):
+            if self.is_grabbing:
+                self.medium_motor.run(speed=-speed)
+                self.speaker.play_file(file=SoundFile.AIR_RELEASE)
+                self.is_grabbing = False
+
+            else:
+                self.medium_motor.run(speed=speed)
+                self.speaker.play_file(file=SoundFile.AIRBRAKE)
+                self.is_grabbing = True
+
+            while Button.BEACON in self.ir_sensor.buttons(channel=self.ir_beacon_channel):
+                pass
+
+
+    def main(self):
+        while True:
+            self.drive_by_ir_beacon()
+            self.grip_or_release_claw_by_ir_beacon()
             wait(1)
 
 
