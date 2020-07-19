@@ -160,7 +160,7 @@ class Track3rWithBlastingBazooka(Track3r):
 
 class Track3rWithGrippingClaw(Track3r):
     """
-    Track3r grips or releases his claw when the Beacon button is pressed
+    Track3r grips or releases its claw when the Beacon button is pressed
     (inspiration from LEGO Mindstorms EV3 Home Edition: Track3r: Tutorial #3)
     """
 
@@ -226,6 +226,29 @@ class Track3rWithHeavyHammer(Track3r):
         while True:
             self.drive_by_ir_beacon()
             self.hammer_by_ir_beacon()
+            wait(1)
+
+
+class Track3rWithBiBladeSpinner(Track3r):
+    """
+    Track3r spins its blade when the Beacon button is pressed
+    (inspiration from LEGO Mindstorms EV3 Home Edition: Track3r: Tutorial #5)
+    """
+    def spin_blade_by_ir_beacon(
+            self,
+            speed: float = 1000   # degrees per second
+        ):
+        if Button.BEACON in self.ir_sensor.buttons(channel=self.ir_beacon_channel):
+            self.medium_motor.run(speed=speed)
+
+        else:
+            self.medium_motor.stop()
+
+            
+    def main(self):
+        while True:
+            self.drive_by_ir_beacon()
+            self.spin_blade_by_ir_beacon()
             wait(1)
 
 
