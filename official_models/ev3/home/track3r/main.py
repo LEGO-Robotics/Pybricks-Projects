@@ -192,6 +192,43 @@ class Track3rWithGrippingClaw(Track3r):
             wait(1)
 
 
+class Track3rWithHeavyHammer(Track3r):
+    """
+    Track3r hammers down when the Beacon button is pressed
+    (inspiration from LEGO Mindstorms EV3 Home Edition: Track3r: Tutorial #4)
+    """
+    def hammer_by_ir_beacon(self):
+        if Button.BEACON in self.ir_sensor.buttons(channel=self.ir_beacon_channel):
+            self.screen.load_image(ImageFile.ANGRY)
+
+            self.medium_motor.run_time(
+                speed=1000,
+                time=1000,
+                then=Stop.HOLD,
+                wait=True)
+
+            self.speaker.play_file(file=SoundFile.LAUGHING_2)
+
+            self.medium_motor.run_time(
+                speed=-1000,
+                time=1000,
+                then=Stop.HOLD,
+                wait=True)
+
+
+    def main(self):
+        self.medium_motor.run_time(
+            speed=-200,
+            time=1000,
+            then=Stop.HOLD,
+            wait=True)
+
+        while True:
+            self.drive_by_ir_beacon()
+            self.hammer_by_ir_beacon()
+            wait(1)
+
+
 if __name__ == '__main__':
     TRACK3R = Track3rWithBlastingBazooka()
     TRACK3R.main()
