@@ -20,7 +20,8 @@ from pybricks.tools import wait
 
 class R3ptar(EV3Brick):
     """
-    R3ptar can be driven around by the remote control, strikes the Beacon button is pressed,
+    R3ptar can be driven around by the IR Remote Control,
+    strikes when the Beacon button is pressed,
     and hisses when the Touch Sensor is pressed
     (inspiration from LEGO Mindstorms EV3 Home Edition: R3ptar: Tutorial #4)
     """
