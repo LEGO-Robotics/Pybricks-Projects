@@ -105,6 +105,9 @@ class R3ptar(EV3Brick):
 
 
     def main(self, speed: float = 1000):
+        """
+        R3ptar's main program performing various capabilities
+        """
         while True:
             self.drive_by_ir_beacon(speed=speed)
             self.bite_by_ir_beacon(speed=speed)
@@ -114,5 +117,4 @@ class R3ptar(EV3Brick):
 
 if __name__ == '__main__':
     R3PTAR = R3ptar()
-        
     R3PTAR.main(speed=1000)
