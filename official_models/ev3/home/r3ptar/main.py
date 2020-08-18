@@ -107,11 +107,8 @@ class R3ptar(EV3Brick):
     def main(self, speed: float = 1000):
         while True:
             self.drive_by_ir_beacon(speed=speed)
-
             self.bite_by_ir_beacon(speed=speed)
-
             self.hiss_if_touched()
-
             wait(1)
 
 
