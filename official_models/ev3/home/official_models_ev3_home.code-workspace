@@ -1,5 +1,21 @@
 {
-    "folders": [],
+    "folders": [
+        {
+            "path": "ev3rstorm"
+        },
+        {
+            "path": "gripp3r"
+        },
+        {
+            "path": "r3ptar"
+        },
+        {
+            "path": "spik3r"
+        },
+        {
+            "path": "track3r"
+        }
+    ],
     "settings": {
         "debug.openDebug": "neverOpen"
     }
