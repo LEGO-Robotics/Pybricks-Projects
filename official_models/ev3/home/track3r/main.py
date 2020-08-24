@@ -99,7 +99,7 @@ class RemoteControlledTank:
             self.driver.stop()
 
 
-class Track3r(RemoteControlledTank, EV3Brick):
+class Track3r(RemoteControlledTank):
     WHEEL_DIAMETER = 26   # milimeters
     AXLE_TRACK = 140      # milimeters
 
@@ -113,6 +113,8 @@ class Track3r(RemoteControlledTank, EV3Brick):
             wheel_diameter=self.WHEEL_DIAMETER, axle_track=self.AXLE_TRACK,
             left_motor_port=left_track_motor_port, right_motor_port=right_track_motor_port,
             ir_sensor_port=ir_sensor_port, ir_beacon_channel=ir_beacon_channel)
+
+        self.ev3_brick = EV3Brick()
 
         self.medium_motor = Motor(port=medium_motor_port,
                                   positive_direction=Direction.CLOCKWISE)
@@ -143,14 +145,14 @@ class Track3rWithBlastingBazooka(Track3r):
                 then=Stop.HOLD,
                 wait=True) 
 
-            self.speaker.play_file(file=SoundFile.LAUGHING_1)
+            self.ev3_brick.speaker.play_file(file=SoundFile.LAUGHING_1)
                
             while Button.BEACON in self.ir_sensor.buttons(channel=self.ir_beacon_channel):
                 pass
 
 
     def main(self):
-        self.screen.load_image(ImageFile.PINCHED_MIDDLE)
+        self.ev3_brick.screen.load_image(ImageFile.PINCHED_MIDDLE)
             
         while True:
             self.drive_by_ir_beacon()
@@ -173,12 +175,12 @@ class Track3rWithGrippingClaw(Track3r):
         if Button.BEACON in self.ir_sensor.buttons(channel=self.ir_beacon_channel):
             if self.is_gripping:
                 self.medium_motor.run(speed=-speed)
-                self.speaker.play_file(file=SoundFile.AIR_RELEASE)
+                self.ev3_brick.speaker.play_file(file=SoundFile.AIR_RELEASE)
                 self.is_gripping = False
 
             else:
                 self.medium_motor.run(speed=speed)
-                self.speaker.play_file(file=SoundFile.AIRBRAKE)
+                self.ev3_brick.speaker.play_file(file=SoundFile.AIRBRAKE)
                 self.is_gripping = True
 
             while Button.BEACON in self.ir_sensor.buttons(channel=self.ir_beacon_channel):
@@ -199,7 +201,7 @@ class Track3rWithHeavyHammer(Track3r):
     """
     def hammer_by_ir_beacon(self):
         if Button.BEACON in self.ir_sensor.buttons(channel=self.ir_beacon_channel):
-            self.screen.load_image(ImageFile.ANGRY)
+            self.ev3_brick.screen.load_image(ImageFile.ANGRY)
 
             self.medium_motor.run_time(
                 speed=1000,
@@ -207,7 +209,7 @@ class Track3rWithHeavyHammer(Track3r):
                 then=Stop.HOLD,
                 wait=True)
 
-            self.speaker.play_file(file=SoundFile.LAUGHING_2)
+            self.ev3_brick.speaker.play_file(file=SoundFile.LAUGHING_2)
 
             self.medium_motor.run_time(
                 speed=-1000,

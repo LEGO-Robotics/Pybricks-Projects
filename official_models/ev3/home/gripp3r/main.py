@@ -99,7 +99,7 @@ class RemoteControlledTank:
             self.driver.stop()
 
 
-class Gripp3r(RemoteControlledTank, EV3Brick):
+class Gripp3r(RemoteControlledTank):
     WHEEL_DIAMETER = 26   # milimeters
     AXLE_TRACK = 115      # milimeters
 
@@ -115,6 +115,8 @@ class Gripp3r(RemoteControlledTank, EV3Brick):
             left_motor_port=left_track_motor_port, right_motor_port=right_track_motor_port,
             ir_sensor_port=ir_sensor_port, ir_beacon_channel=ir_beacon_channel)
 
+        self.ev3_brick = EV3Brick()
+
         self.grip_motor = Motor(port=grip_motor_port,
                                 positive_direction=Direction.CLOCKWISE)
 
@@ -127,7 +129,7 @@ class Gripp3r(RemoteControlledTank, EV3Brick):
     def grip_or_release_by_ir_beacon(self, speed: float = 500):
         if Button.BEACON in self.ir_sensor.buttons(channel=self.ir_beacon_channel):
             if self.touch_sensor.pressed():
-                self.speaker.play_file(file=SoundFile.AIR_RELEASE)
+                self.ev3_brick.speaker.play_file(file=SoundFile.AIR_RELEASE)
 
                 self.grip_motor.run_time(
                     speed=speed,
@@ -136,7 +138,7 @@ class Gripp3r(RemoteControlledTank, EV3Brick):
                     wait=True)
 
             else:
-                self.speaker.play_file(file=SoundFile.AIRBRAKE)
+                self.ev3_brick.speaker.play_file(file=SoundFile.AIRBRAKE)
 
                 self.grip_motor.run(speed=-speed)
 

@@ -19,7 +19,7 @@ from pybricks.parameters import Button, Direction, Port, Stop
 from pybricks.tools import wait
 
 
-class Spik3r(EV3Brick):
+class Spik3r:
     def __init__(
             self,
             crushing_claw_motor_port: Port = Port.A,
@@ -27,6 +27,8 @@ class Spik3r(EV3Brick):
             lightning_tail_motor_port: Port = Port.D,
             touch_sensor_port: Port = Port.S1, color_sensor_port: Port = Port.S3,
             ir_sensor_port: Port = Port.S4, ir_beacon_channel: int = 1):
+        self.ev3_brick = EV3Brick()
+
         self.crushing_claw_motor = Motor(port=crushing_claw_motor_port,
                                          positive_direction=Direction.CLOCKWISE)
         self.moving_motor = Motor(port=moving_motor_port,
@@ -53,7 +55,7 @@ class Spik3r(EV3Brick):
                 then=Stop.HOLD,
                 wait=False)
 
-            self.speaker.play_file(file=SoundFile.ERROR_ALARM)
+            self.ev3_brick.speaker.play_file(file=SoundFile.ERROR_ALARM)
 
             self.lightning_tail_motor.run_time(
                 speed=-1000,
@@ -112,7 +114,7 @@ class Spik3r(EV3Brick):
         """
         Spik3r's main program performing various capabilities
         """
-        self.screen.load_image(ImageFile.WARNING)
+        self.ev3_brick.screen.load_image(ImageFile.WARNING)
         
         while True:
             self.move_by_ir_beacon()

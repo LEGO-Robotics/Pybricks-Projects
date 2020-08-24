@@ -101,7 +101,7 @@ class RemoteControlledTank:
             self.drive_base.stop()
 
 
-class Ev3rstorm(RemoteControlledTank, EV3Brick):
+class Ev3rstorm(RemoteControlledTank):
     WHEEL_DIAMETER = 26   # milimeters
     AXLE_TRACK = 102      # milimeters
 
@@ -116,6 +116,8 @@ class Ev3rstorm(RemoteControlledTank, EV3Brick):
             wheel_diameter=self.WHEEL_DIAMETER, axle_track=self.AXLE_TRACK,
             left_motor_port=left_track_motor_port, right_motor_port=right_track_motor_port,
             ir_sensor_port=ir_sensor_port, ir_beacon_channel=ir_beacon_channel)
+
+        self.ev3_brick = EV3Brick()
         
         self.bazooka_blast_motor = Motor(port=bazooka_blast_motor_port,
                                          positive_direction=Direction.CLOCKWISE)
@@ -142,7 +144,7 @@ class Ev3rstorm(RemoteControlledTank, EV3Brick):
 
         if self.touch_sensor.pressed():
             if self.color_sensor.ambient() < 15:
-                self.speaker.play_file(file=SoundFile.UP)
+                self.ev3_brick.speaker.play_file(file=SoundFile.UP)
 
                 self.bazooka_blast_motor.run_angle(
                     speed=2 * MEDIUM_MOTOR_ROTATIONAL_DEGREES_PER_BLAST,   # shoot quickly in half a second
@@ -150,10 +152,10 @@ class Ev3rstorm(RemoteControlledTank, EV3Brick):
                     then=Stop.HOLD,
                     wait=True)
 
-                self.speaker.play_file(file=SoundFile.LAUGHING_1)
+                self.ev3_brick.speaker.play_file(file=SoundFile.LAUGHING_1)
 
             else:
-                self.speaker.play_file(file=SoundFile.DOWN)
+                self.ev3_brick.speaker.play_file(file=SoundFile.DOWN)
 
                 self.bazooka_blast_motor.run_angle(
                     speed=2 * MEDIUM_MOTOR_ROTATIONAL_DEGREES_PER_BLAST,   # shoot quickly in half a second
@@ -161,7 +163,7 @@ class Ev3rstorm(RemoteControlledTank, EV3Brick):
                     then=Stop.HOLD,
                     wait=True)
 
-                self.speaker.play_file(file=SoundFile.LAUGHING_2)
+                self.ev3_brick.speaker.play_file(file=SoundFile.LAUGHING_2)
 
 
     def main(self,
@@ -170,7 +172,7 @@ class Ev3rstorm(RemoteControlledTank, EV3Brick):
         """
         Ev3rstorm's main program performing various capabilities
         """
-        self.screen.load_image(ImageFile.TARGET)
+        self.ev3_brick.screen.load_image(ImageFile.TARGET)
 
         while True:
             self.drive_by_ir_beacon(speed=driving_speed)

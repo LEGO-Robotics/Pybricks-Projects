@@ -18,7 +18,7 @@ from pybricks.parameters import Button, Direction, Port, Stop
 from pybricks.tools import wait
 
 
-class R3ptar(EV3Brick):
+class R3ptar:
     """
     R3ptar can be driven around by the IR Remote Control,
     strikes when the Beacon button is pressed,
@@ -33,6 +33,8 @@ class R3ptar(EV3Brick):
             strike_motor_port: Port = Port.D,
             touch_sensor_port: Port = Port.S1,
             ir_sensor_port: Port = Port.S4, ir_beacon_channel: int = 1):
+        self.ev3_brick = EV3Brick()
+
         self.steer_motor = Motor(port=steer_motor_port,
                                  positive_direction=Direction.CLOCKWISE)
         self.drive_motor = Motor(port=drive_motor_port,
@@ -101,7 +103,7 @@ class R3ptar(EV3Brick):
 
     def hiss_if_touched(self):
         if self.touch_sensor.pressed():
-            self.speaker.play_file(file=SoundFile.SNAKE_HISS)
+            self.ev3_brick.speaker.play_file(file=SoundFile.SNAKE_HISS)
 
 
     def main(self, speed: float = 1000):
