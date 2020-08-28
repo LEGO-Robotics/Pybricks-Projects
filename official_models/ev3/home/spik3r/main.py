@@ -65,13 +65,13 @@ class Spik3r:
             self.lightning_tail_motor.run_time(
                 speed=-speed,
                 time=1000,
-                then=Stop.HOLD,
+                then=Stop.COAST,
                 wait=True)
 
             self.lightning_tail_motor.run_time(
                 speed=speed,
                 time=1000,
-                then=Stop.HOLD,
+                then=Stop.COAST,
                 wait=True)
 
             while Button.BEACON in \
