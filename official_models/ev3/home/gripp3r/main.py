@@ -132,10 +132,7 @@ class Gripp3r(RemoteControlledTank):
         self.ir_sensor = InfraredSensor(port=ir_sensor_port)
         self.ir_beacon_channel = ir_beacon_channel
 
-    def grip_or_release_by_ir_beacon(
-            self,
-            speed: float = 500,    # mm/s
-            ):
+    def grip_or_release_by_ir_beacon(self, speed: float = 500):
         if Button.BEACON in \
                 self.ir_sensor.buttons(channel=self.ir_beacon_channel):
             if self.touch_sensor.pressed():
