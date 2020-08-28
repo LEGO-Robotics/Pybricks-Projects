@@ -81,10 +81,7 @@ class R3ptar:
             self.steering_motor.hold()
             self.driving_motor.stop()
 
-    def strike_by_ir_beacon(
-            self,
-            speed: float = 1000,    # mm/s
-            ):
+    def strike_by_ir_beacon(self, speed: float = 1000):
         if Button.BEACON in \
                 self.ir_sensor.buttons(channel=self.ir_beacon_channel):
             self.striking_motor.run_time(
