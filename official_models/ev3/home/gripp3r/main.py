@@ -141,7 +141,7 @@ class Gripp3r(RemoteControlledTank):
                 self.gripping_motor.run_time(
                     speed=speed,
                     time=1000,
-                    then=Stop.BRAKE,
+                    then=Stop.COAST,
                     wait=True)
 
             else:
@@ -168,7 +168,7 @@ class Gripp3r(RemoteControlledTank):
         self.gripping_motor.run_time(
             speed=-500,
             time=1000,
-            then=Stop.BRAKE,
+            then=Stop.COAST,
             wait=True)
 
         while True:
