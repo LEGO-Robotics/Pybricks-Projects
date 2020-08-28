@@ -104,10 +104,7 @@ class R3ptar:
         if self.touch_sensor.pressed():
             self.ev3_brick.speaker.play_file(file=SoundFile.SNAKE_HISS)
 
-    def main(
-            self,
-            speed: float = 1000,    # mm/s
-            ):
+    def main(self, speed: float = 1000):
         """
         R3ptar's main program performing various capabilities
         """
